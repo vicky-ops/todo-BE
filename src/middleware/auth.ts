@@ -9,7 +9,7 @@ interface UserRequest extends Request{
 }
 
 
-const auth = (req: Request, res:Response,next: NextFunction) =>{
+const auth = (req: UserRequest, res:Response,next: NextFunction) =>{
     const token = req.header('x-auth-token');
     
     if(!token){
