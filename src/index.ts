@@ -17,6 +17,9 @@ mongoose
 .then(()=>console.log('MongoDB connected'))
 .catch(err=>console.log(err));
 
+app.get('/',(req:Request,res:Response)=>{
+    return res.status(200).send("working");
+})
 app.use('/api/users',userRoutes);
 app.use('/api/todos',todoRoutes);
 

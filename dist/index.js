@@ -15,6 +15,9 @@ mongoose_1.default
     .connect(mongoURI)
     .then(() => console.log('MongoDB connected'))
     .catch(err => console.log(err));
+app.get('/', (req, res) => {
+    return res.status(200).send("working");
+});
 app.use('/api/users', userRoutes_1.default);
 app.use('/api/todos', todoRoutes_1.default);
 const PORT = process.env.PORT || 5008;
