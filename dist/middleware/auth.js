@@ -12,8 +12,11 @@ const auth = (req, res, next) => {
         });
     }
     try {
+        // const decoded = jwt.verify(token, 'jwtSecret') as { user: { id: string } };
+        // (req as UserRequest).user = decoded.user; // Attach user information to req object
+        // next(); // Call next middleware or route handler
         const decoded = jsonwebtoken_1.default.verify(token, 'jwtSecret');
-        req.body.user = decoded.user;
+        req.user = decoded.user;
         next();
     }
     catch (err) {

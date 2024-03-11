@@ -1,5 +1,5 @@
 import {Request,Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { decode } from 'jsonwebtoken';
 
 
 interface UserRequest extends Request{
@@ -9,7 +9,7 @@ interface UserRequest extends Request{
 }
 
 
-const auth = (req: UserRequest, res:Response,next: NextFunction) =>{
+const auth = (req: Request, res:Response,next: NextFunction) =>{
     const token = req.header('x-auth-token');
     
     if(!token){
@@ -19,10 +19,12 @@ const auth = (req: UserRequest, res:Response,next: NextFunction) =>{
     }
 
     try{
-        const decoded = jwt.verify(token,'jwtSecret');
-
-        req.body.user = (decoded as any).user;
-
+        // const decoded = jwt.verify(token, 'jwtSecret') as { user: { id: string } };
+        // (req as UserRequest).user = decoded.user; // Attach user information to req object
+        // next(); // Call next middleware or route handler
+        
+        const decoded = jwt.verify(token,'jwtSecret') as {user:{id:string}};
+        (req as UserRequest).user = decoded.user;
         next();
     }catch(err){
         res.status(401).json({msg:'Token is not valid'})

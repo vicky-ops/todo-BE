@@ -78,15 +78,18 @@ router.delete("/:id", auth_1.default, (req, res) => __awaiter(void 0, void 0, vo
 // get all the todos mapped to the authenticated user
 router.get('/user', auth_1.default, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        // Get the userid f
-        const userId = req.user.id;
-        //Retive todos that are mapped to the user
-        const todos = yield Todo_1.default.find({ user: userId });
+        const userId = req.user.id; // Access user ID from req.user
+        const todos = yield Todo_1.default.find({ user: userId }); // Retrieve todos mapped to the user
+        res.json(todos); // Send todos as JSON response
+        // // Get the userid f
+        // const userId  = (req as any).user.id;
+        // //Retive todos that are mapped to the user
+        // const todos = await Todo.find({user:userId});
         // if no tods found
         if (!todos || todos.length === 0) {
             return res.status(404).json({ msg: "No todos found for the user" });
         }
-        res.json(todos);
+        // res.json(todos)
     }
     catch (err) {
         console.error(err.message);
